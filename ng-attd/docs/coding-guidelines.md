@@ -1,3 +1,8 @@
+# Documentation
+## Document setups, installations, deployment steps
+## Document issues and solutions
+## Document complex features, architectures, communications
+
 # Code Formatting
 ## Use same VSCode .editorconfig as follows:
 
