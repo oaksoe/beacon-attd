@@ -1,0 +1,17 @@
+.itl-login-container {
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.itl-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.itl-form-container > * {
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+      

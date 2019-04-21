@@ -1,0 +1,24 @@
+<div class="itl-login-container">
+    <mat-card>
+        <form [formGroup]="loginForm">
+            <div class="itl-form-container" style="padding-top:10px">
+                <mat-form-field>
+                    <input matInput placeholder="Username" formControlName="usernameControl" [(ngModel)]="user.username">
+                    <mat-error *ngIf="loginForm.controls.usernameControl.hasError('required')">
+                        Username is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input type="password" matInput class="mp-auth-input" placeholder="Password" formControlName="passwordControl" [(ngModel)]="user.password">
+                    <mat-error *ngIf="loginForm.controls.passwordControl.hasError('required')">
+                        Password is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <br/>
+            </div>
+        </form>
+        <div style="text-align:center; margin-top:10px;">
+            <button mat-raised-button color="primary" (click)="onLoginClick()" [disabled]="!loginForm.valid">Login</button>
+        </div>
+    </mat-card>
+</div>

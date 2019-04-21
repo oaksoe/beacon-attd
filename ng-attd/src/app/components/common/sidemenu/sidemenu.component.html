@@ -7,7 +7,7 @@
                 <h1 class="itl-sidenav-container-item-header">
                     <b>Attendance</b>
                 </h1>
-                <a class="itl-sidenav-container-item" mat-list-item>
+                <a class="itl-sidenav-container-item" mat-list-item routerLinkActive="active" [routerLink]="['/attendanceList']">
                     <mat-icon>list</mat-icon>
                     <span class="itl-sidenav-container-item-label">Attendance List</span>
                 </a>
@@ -15,6 +15,6 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        This is sidemenu content!
+        <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

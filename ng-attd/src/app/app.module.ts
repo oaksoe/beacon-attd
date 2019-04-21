@@ -28,15 +28,19 @@ import {
     MatExpansionModule,
 } from '@angular/material';
 
+import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 
 import {
     HeaderComponent,
     SidemenuComponent,
+    LoginComponent,
+    AttendanceListComponent,
 } from './components';
 
 import {
     PubSubService,
+    AuthService,
 } from './services';
 
 @NgModule({
@@ -44,12 +48,15 @@ import {
         AppComponent,
         HeaderComponent,
         SidemenuComponent,
+        LoginComponent,
+        AttendanceListComponent,
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule, 
         ReactiveFormsModule,
+        AppRoutingModule,
         MatButtonModule,
         MatChipsModule,
         MatDatepickerModule,
@@ -75,6 +82,7 @@ import {
     ],
     providers: [
         PubSubService,
+        AuthService,
     ],
     bootstrap: [AppComponent]
 })
