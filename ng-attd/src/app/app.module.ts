@@ -29,10 +29,15 @@ import {
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
+
 import {
     HeaderComponent,
     SidemenuComponent,
 } from './components';
+
+import {
+    PubSubService,
+} from './services';
 
 @NgModule({
     declarations: [
@@ -68,7 +73,9 @@ import {
         MatMenuModule,
         MatExpansionModule,
     ],
-    providers: [],
+    providers: [
+        PubSubService,
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

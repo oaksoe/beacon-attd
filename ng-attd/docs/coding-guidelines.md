@@ -20,14 +20,16 @@ trim_trailing_whitespace = true
 max_line_length = 0
 trim_trailing_whitespace = true
 
+## Always leave one empty line after the last line in every file
+
 # Styling
 ## Use sass instead of css (.scss file instead of .css file)
 
 ## Naming a css classname
-1. Choose a prefix - 3 characters (Eg. abc-)
-2. For common class names, use organization's prefix (Eg. itl-)
-3. For app-related class names, use the app's prefix (Eg. att-)
-4. Follow hierarchy of html elements/angular components (Eg. itl-app, itl-header, itl-header-div)
+- Choose a prefix - 3 characters (Eg. abc-)
+- For common class names, use organization's prefix (Eg. itl-)
+- For app-related class names, use the app's prefix (Eg. att-)
+- Follow hierarchy of html elements/angular components (Eg. itl-app, itl-header, itl-header-div)
 
 # Folder/File Structure
 ## Have the following folder structure
@@ -40,19 +42,42 @@ src
                 sidemenu
                     sidemenu.component.* (ts, html, scss)
                 login
-                    login.component.* (ts, html, scss)    
+                    login.component.* (ts, html, scss)
+            index.ts
         models
             constants.ts
             user.model.ts
+            index.ts
         services
             auth
                 auth.service.ts
             api
                 http.service.ts
+            index.ts
+
+## Use index.ts to export (expose) components, models and services
+
+# Typescript syntax
+## Minimize using let. Use const instead.
+
+## In a class whether a component, service or a normal class,
+- Always use access modifier public, protected, private.
+- The order of class variables and methods shall follow that of access modifiers (public, protected, private)
+- If the variable or method is to be used by another class or in the html, use public, else use private
 
 # Component
-## Naming a component
-1. Choose a prefix - 4 characters (Eg. abcd-)
-2. For common components like header, sidemenu, login, use organization's prefix (Eg. itlx-)
-3. For app-related components, use the app's prefix (Eg. attd-)
-4. 
+## Naming the component selector
+- Choose a prefix - 4 characters (Eg. abcd-)
+- For common components like header, sidemenu, login, use organization's prefix (Eg. itlx-)
+- For app-related components, use the app's prefix (Eg. attd-)
+
+## Naming the component
+- Name the same as component selector without the prefix (Eg. attd-create-attendance => CreateAttendanceComponent)
+- Name with meaning. Avoid using short names
+
+## Implements lifecycle events
+- Always implement OnInit, AfterViewInit, OnDestroy if the ngOnInit, ngAfterViewInit are used
+
+## Constructor
+- Use private for constructor parameters (injected services, ...)
+- no access modifier in front of constructor()

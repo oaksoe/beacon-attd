@@ -1,0 +1,43 @@
+.itl-sidenav {
+    &-container {
+        /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+        causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+        flex: 1;
+        min-height: 300px;
+        height: calc(100vh - 40px);
+
+        &-panel {
+            min-width: 250px;
+            padding-top: 0;
+            background: -moz-linear-gradient(left, rgba(8, 163, 224,1)  1%, rgba(8, 163, 224,1)  50%, rgba(8, 163, 224,1)  100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(left, rgba(8, 163, 224,1)  1%,rgba(8, 163, 224,1)  50%,rgba(8, 163, 224,1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to right, rgba(8, 163, 224,1)  1%,rgba(8, 163, 224,1)  100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2185c', endColorstr='#c2165e',GradientType=1 ); /* IE6-9 */
+        }
+
+        &-item-header {
+            font-size: 20px;
+            text-align: left;
+            margin-left: 20px;
+            color: #f0f0f0;
+        }
+
+        &-item {
+            font-size: 16px;
+            color: #f0f0f0;
+        }
+
+        &-item:active {
+            color: #ffff00;
+        }
+
+        &-item-label {
+            margin-left: 10px;
+        }
+    }
+
+    .mat-nav-list a.active {
+        background-color: rgba(8, 163, 224,1);
+    }
+}
+  

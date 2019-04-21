@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PubSubService } from '../../../services';
+import { PubSubEventType } from '../../../models';
 
 @Component({
     selector: 'itlx-header',
@@ -6,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-    constructor() {
+    constructor(
+        private pubSubService: PubSubService,
+    ) {
     }
 
-    ngOnInit() {        
+    public ngOnInit() { 
+    }
+
+    public toggleSideMenu() {
+        this.pubSubService.publish({
+            type: PubSubEventType.TOGGLE_SIDEMENU
+        });
     }
 }
