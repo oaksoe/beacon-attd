@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { User } from '../../models';
+import { HttpService } from '../api/http.service';
  
 @Injectable()
 export class AuthService {
     private user: User;
     private loggedIn = false;
 
-    constructor() {
+    constructor(
+        private http: HttpService<any>
+    ) {
         this.resetUser();
     }
 
@@ -31,7 +36,6 @@ export class AuthService {
             id: '',
             username: '',
             password: '',
-            email: '',
             name: '',
             role: '',
         });
@@ -56,8 +60,28 @@ export class AuthService {
         return true;
     }
     
-    public login(username: string, password: string): boolean {
-        return true;
+    public login(username: string, password: string): Observable<any> {
+        return this.http.post('/security/login', { username: username, password: password })
+            .pipe(map((result: any) => {
+                if (result.status === "SUCCESS") {
+                    if (result.data) {
+                        this.loggedIn = true;
+                        this.setUser({
+                            id: result.data.id,
+                            username: result.data._username,
+                            password: '',
+                            name: result.data._name,
+                            role: result.data._type
+                        });
+                        
+                        return this.getUser();
+                    } 
+
+                    return null;
+                }
+                
+                return null;
+            }), catchError(err => Observable.throw(err)));
     }
 
     public isLoggedIn() {

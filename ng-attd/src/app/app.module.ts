@@ -39,6 +39,8 @@ import {
 } from './components';
 
 import {
+    ConfigService,
+    HttpService,
     PubSubService,
     AuthService,
 } from './services';
@@ -81,6 +83,8 @@ import {
         MatExpansionModule,
     ],
     providers: [
+        ConfigService,
+        HttpService,
         PubSubService,
         AuthService,
     ],

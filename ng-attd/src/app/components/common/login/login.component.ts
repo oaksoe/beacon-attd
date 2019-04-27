@@ -28,15 +28,18 @@ export class LoginComponent implements OnInit {
     }
 
     public onLoginClick() {
-        const isLoggedIn = this.authService.login(this.user.username, this.user.password);
+        this.authService.login(this.user.username, this.user.password)
+            .subscribe(user => {
+                if(user) {
+                    this.pubSubService.publish({
+                        type: PubSubEventType.USER_LOGGEDIN
+                    });
         
-        if (isLoggedIn) {
-            this.pubSubService.publish({
-                type: PubSubEventType.USER_LOGGEDIN
-            });
-
-            this.router.navigate(['/attendanceList']);
-        }
+                    this.router.navigate(['/attendanceList']);
+                }
+            }, err => { 
+                console.log(err);
+        });
     }
 
     private initLoginForm() {

@@ -3,4 +3,9 @@
         <mat-icon>menu</mat-icon>
     </button>
     <h1 class="itl-app-name">Attendance Dashboard</h1> 
+    <span *ngIf="isLoggedIn" class="itl-app-logout">
+        <button mat-icon-button (click)="onLogout()">
+            <mat-icon>exit_to_app</mat-icon>Logout
+        </button>
+    </span>
 </mat-toolbar>
