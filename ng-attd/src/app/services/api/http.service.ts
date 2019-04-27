@@ -19,7 +19,7 @@ export class HttpService<T> {
         private configService: ConfigService
         ) {
         const config = this.configService.getConfig();
-        this.apiBaseUrl = 'http://' + config.api.host + ':' + config.api.port + '/v1/hdesk';
+        this.apiBaseUrl = 'http://' + config.api.host + ':' + config.api.port + '/v1/api';
     }
 
     public post(url: string, object: T) : Observable<T> {

@@ -61,7 +61,7 @@ export class AuthService {
     }
     
     public login(username: string, password: string): Observable<any> {
-        return this.http.post('/security/login', { username: username, password: password })
+        return this.http.post('/auth/login', { username: username, password: password })
             .pipe(map((result: any) => {
                 if (result.status === "SUCCESS") {
                     if (result.data) {
