@@ -87,11 +87,13 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Successfully login : " + Config.userName,Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                Config.studentID = response.getJSONObject("data").getString("_studentID");
             }
             else{
                 password.setText("");
                 Toast.makeText(this, "Login Failed",Toast.LENGTH_SHORT).show();
             }
+
         } catch (JSONException e) {
             Log.e(TAG,"e " +e.toString());
         }

@@ -122,8 +122,8 @@ public class MainActivity extends Activity implements BeaconConsumer {
                     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                         for (Beacon oneBeacon : beacons) {
                             Log.d(TAG1, "Major *=> " + oneBeacon.getId2() + " Distance *=> " + Double.toString(oneBeacon.getDistance()) );
-                            if(oneBeacon.getId2().toString().equalsIgnoreCase(Config.BeaconMajor) && oneBeacon.getDistance() < 7.0){
-                                postStatus("12020");
+                            if(oneBeacon.getId2().toString().equalsIgnoreCase(Config.BeaconMajor) && oneBeacon.getDistance() < Config.classRadius){
+                                postStatus(Config.studentID);
                             }
                         }
                     }
