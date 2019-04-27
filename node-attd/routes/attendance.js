@@ -7,6 +7,7 @@ var dbEntityController = require('../controllers/dbEntityController');
 var entity = 'attendance';
 
 var create = async (req, res) => {
+    console.log('attendance', req.body);
     try {
         var attendance = req.body;
         if (attendance) {

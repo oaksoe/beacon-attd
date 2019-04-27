@@ -34,12 +34,14 @@ app.use(function(req, res, next) {
 	var err = new Error('Not Found');
 	err.status = 404;
 	next(err);
+	console.log('err', err);
 });
 
 // production error handler
 app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	res.send(err);
+	console.log('err', err);
 });
 
 // init db connection

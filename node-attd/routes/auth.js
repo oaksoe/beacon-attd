@@ -7,6 +7,7 @@ var dbEntityController = require('../controllers/dbEntityController');
 var entity = 'user';
 
 var create = async (req, res) => {
+    console.log('create');
     try {
         var user = req.body;
         if (user) {
@@ -24,6 +25,7 @@ var create = async (req, res) => {
 
 var login = async (req, res) => {
     var user = req.body;
+    console.log('login', user);
 
     try {
         var result = await dbEntityController.find(entity, { _username: user.username });
@@ -41,7 +43,24 @@ var login = async (req, res) => {
     }
 }
 
+var users = async (req, res) => {
+    console.log('users');
+    var user = req.body;
+
+    try {
+        var result = await dbEntityController.find(entity);
+        if (result.length > 0) {
+            httpHelper.res(res, result);            
+        } else {
+            httpHelper.err(res, 'No Users Available');
+        }
+    } catch(err) {
+        httpHelper.err(res, err);
+    }
+}
+
 router.post('/create', create);
 router.post('/login', login);
+router.get('/users', users);
 
 module.exports = router;
