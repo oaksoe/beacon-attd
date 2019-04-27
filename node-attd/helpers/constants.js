@@ -1,3 +1,9 @@
+exports.USER_TYPE = {
+    STUDENT: 'Student',
+    LECTURER: 'Lecturer'
+}
+
+
 exports.ATTDENDANCE_STATUS = {
     OPEN: 'Open',
     LATE: 'Late',

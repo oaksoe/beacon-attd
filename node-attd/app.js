@@ -23,7 +23,9 @@ app.use(cookieParser());
 app.use(cors(httpHelper.corsOptions()));
 
 // routes
+var authRoute = require('./routes/auth');
 var attendanceRoute = require('./routes/attendance');
+app.use('/v1/api/auth/', authRoute);
 app.use('/v1/api/attendance/', attendanceRoute);
 
 // http error handlers

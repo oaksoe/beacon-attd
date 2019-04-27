@@ -3,7 +3,6 @@ var router = express.Router();
 var httpHelper = require('../helpers/http');
 var AttendanceModel = require('../models/attendance.model');
 var dbEntityController = require('../controllers/dbEntityController');
-var constants = require('../helpers/constants');
 
 var entity = 'attendance';
 
@@ -16,7 +15,7 @@ var create = async (req, res) => {
             newAttendance.id = createdAttendance.id;
             httpHelper.res(res, createdAttendance);
         } else {
-            httpHelper.err(res, 'Invalid order details');
+            httpHelper.err(res, 'Invalid attendance details');
         }
     } catch(err) {
         httpHelper.err(res, err);
