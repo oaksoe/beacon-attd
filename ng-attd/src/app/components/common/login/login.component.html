@@ -1,7 +1,7 @@
 <div class="itl-login-container">
     <mat-card>
         <form [formGroup]="loginForm">
-            <div class="itl-form-container" style="padding-top:10px">
+            <div class="itl-form-container">
                 <mat-form-field>
                     <input matInput placeholder="Username" formControlName="usernameControl" [(ngModel)]="user.username">
                     <mat-error *ngIf="loginForm.controls.usernameControl.hasError('required')">

@@ -46,6 +46,7 @@ import {
     HttpService,
     PubSubService,
     AuthService,
+    UserApiService,
 } from './services';
 
 @NgModule({
@@ -93,6 +94,7 @@ import {
         HttpService,
         PubSubService,
         AuthService,
+        UserApiService,
     ],
     bootstrap: [AppComponent]
 })

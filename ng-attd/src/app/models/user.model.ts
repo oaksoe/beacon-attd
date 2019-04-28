@@ -5,3 +5,8 @@ export class User {
     public name: string;
     public role: string;
 }
+
+export class Student extends User {
+    public intake: string;
+    public modules: string[];
+}

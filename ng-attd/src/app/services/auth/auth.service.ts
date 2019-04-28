@@ -68,10 +68,10 @@ export class AuthService {
                         this.loggedIn = true;
                         this.setUser({
                             id: result.data.id,
-                            username: result.data._username,
+                            username: result.data.username,
                             password: '',
-                            name: result.data._name,
-                            role: result.data._type
+                            name: result.data.name,
+                            role: result.data.role
                         });
                         
                         return this.getUser();
