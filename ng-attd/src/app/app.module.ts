@@ -36,6 +36,8 @@ import {
     HeaderComponent,
     SidemenuComponent,
     LoginComponent,
+    DataUploadsComponent,
+    ScheduleComponent,
     AttendanceListComponent,
 } from './components';
 
@@ -52,6 +54,8 @@ import {
         HeaderComponent,
         SidemenuComponent,
         LoginComponent,
+        DataUploadsComponent,
+        ScheduleComponent,
         AttendanceListComponent,
     ],
     imports: [

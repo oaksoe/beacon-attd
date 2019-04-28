@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { 
     LoginComponent,
+    DataUploadsComponent,
+    ScheduleComponent,
     AttendanceListComponent,
 } from './components';
 
@@ -10,6 +12,8 @@ import {
 const MAINMENU_ROUTES: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full'},
     { path: 'login', component: LoginComponent }, 
+    { path: 'dataUploads', component: DataUploadsComponent }, 
+    { path: 'schedule', component: ScheduleComponent }, 
     { path: 'attendanceList', component: AttendanceListComponent },
 ]
 

@@ -1,7 +1,27 @@
 <mat-sidenav-container class="itl-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav class="itl-sidenav-container-panel" #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'"
         [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-        <mat-nav-list class="itl-sidenav-container-panel">    
+        <mat-nav-list class="itl-sidenav-container-panel">
+            <ng-container>
+                <mat-divider [inset]="false"></mat-divider>
+                <h1 class="itl-sidenav-container-item-header">
+                    <b>Admin</b>
+                </h1>
+                <a class="itl-sidenav-container-item" mat-list-item routerLinkActive="active" [routerLink]="['/dataUploads']">
+                    <mat-icon>list</mat-icon>
+                    <span class="itl-sidenav-container-item-label">Data Uploads</span>
+                </a>
+            </ng-container>    
+            <ng-container>
+                <mat-divider [inset]="false"></mat-divider>
+                <h1 class="itl-sidenav-container-item-header">
+                    <b>Timetable</b>
+                </h1>
+                <a class="itl-sidenav-container-item" mat-list-item routerLinkActive="active" [routerLink]="['/schedule']">
+                    <mat-icon>schedule</mat-icon>
+                    <span class="itl-sidenav-container-item-label">Schedule</span>
+                </a>
+            </ng-container>
             <ng-container>
                 <mat-divider [inset]="false"></mat-divider>
                 <h1 class="itl-sidenav-container-item-header">

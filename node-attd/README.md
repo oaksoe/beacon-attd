@@ -2,20 +2,20 @@
 Note: use Postman to test the apis
 
 ## Auth apis
-# Create at least 1 user and 1 lecturer for system to be usable
+# Create at least 1 admin for system to be usable
 url: http://localhost:8000/v1/api/auth/create
 method: POST
 Body: {
-	"username": "myo",
+	"username": "david",
 	"password": "123",
-	"name": "Myo",
-	"type": "Student"
+	"name": "David",
+	"type": "Admin"
 }
 
 url: http://localhost:8000/v1/api/auth/login
 method: POST
 Body: {
-	"username": "myo",
+	"username": "david",
 	"password": "123"
 }
 
