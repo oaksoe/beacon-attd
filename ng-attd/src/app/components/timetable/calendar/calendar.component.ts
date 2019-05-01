@@ -44,7 +44,6 @@ export class CalendarComponent {
         {
             label: '<i class="fa fa-fw fa-pencil"></i>',
             onClick: ({ event }: { event: CalendarEvent }): void => {
-                debugger;
                 this.handleEvent('Edited', event);
             }
         },
@@ -52,7 +51,6 @@ export class CalendarComponent {
             label: '<i class="fa fa-fw fa-times"></i>',
             onClick: ({ event }: { event: CalendarEvent }): void => {
                 this.events = this.events.filter(iEvent => iEvent !== event);
-                debugger;
                 this.handleEvent('Deleted', event);
             }
         }
@@ -135,12 +133,15 @@ export class CalendarComponent {
     }
   
     public handleEvent(action: string, event: CalendarEvent): void {
-        debugger;
         console.log('hello');
     }
   
     public closeOpenMonthViewDay() {
-      this.activeDayIsOpen = false;
+        this.activeDayIsOpen = false;
+    }
+
+    public setView(view: CalendarView) {
+        this.view = view;
     }
 }
   

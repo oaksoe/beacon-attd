@@ -1,0 +1,11 @@
+
+.att-calendar-buttons-container {
+    display: flex;
+    flex-direction: column;    
+    align-items: center;
+}
+
+.att-calendar-today-button, .att-calendar-day-button {
+    color: white;
+    background: #5a6bce;
+}
