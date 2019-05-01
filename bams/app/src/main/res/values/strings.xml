@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">bams</string>
+    <string name="title_home_page">Home Page</string>
+    <string name="title_account_page">Account Page</string>
+    <string name="title_settings_page">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

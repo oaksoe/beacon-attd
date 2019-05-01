@@ -11,7 +11,15 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationMenu;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -36,16 +44,36 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends Activity implements BeaconConsumer {
+public class MainActivity extends AppCompatActivity implements BeaconConsumer {
+
     protected static final String TAG = "MonitoringActivity";
     protected static final String TAG1 = "Beacon";
     private BeaconManager beaconManager;
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
+    //Testing part
+    private TextView mTextMessage;
+    private ActionBar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//Testing Begins
+        toolbar = getSupportActionBar();
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigationView);
+        mTextMessage = findViewById(R.id.txt_welcome);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        toolbar.setTitle("B.A.M.S");
+
+
+//        BottomNavigationView navView = findViewById(R.id.navigationView);
+//        mTextMessage = findViewById(R.id.message);
+//        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+//Testing Ends
+
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mBluetoothAdapter.disable();
 
@@ -88,6 +116,33 @@ public class MainActivity extends Activity implements BeaconConsumer {
         }
     }
 
+    //Testing code for BottomNavigationView
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    toolbar.setTitle("Home");
+                    mTextMessage.setText(R.string.title_home_page);
+                    return true;
+                case R.id.navigation_account:
+                    toolbar.setTitle("Account");
+                    mTextMessage.setText(R.string.title_account_page);
+                    return true;
+                case R.id.navigation_settings:
+                    toolbar.setTitle("Settings");
+                    mTextMessage.setText(R.string.title_settings_page);
+                    return true;
+            }
+            return false;
+        }
+    };
+
+
+    //End of test
     @Override
     public void onBeaconServiceConnect() {
         final Region region = new Region("myBeacons", null, null, null);
