@@ -3,6 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import {
     MatButtonModule,
@@ -38,6 +40,7 @@ import {
     LoginComponent,
     DataUploadsComponent,
     ScheduleComponent,
+    CalendarComponent,
     AttendanceListComponent,
 } from './components';
 
@@ -57,6 +60,7 @@ import {
         LoginComponent,
         DataUploadsComponent,
         ScheduleComponent,
+        CalendarComponent,
         AttendanceListComponent,
     ],
     imports: [
@@ -88,6 +92,10 @@ import {
         MatSortModule,
         MatMenuModule,
         MatExpansionModule,
+        CalendarModule.forRoot ({
+            provide: DateAdapter,
+            useFactory: adapterFactory
+        })
     ],
     providers: [
         ConfigService,
