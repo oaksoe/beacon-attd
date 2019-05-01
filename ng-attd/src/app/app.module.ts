@@ -50,6 +50,9 @@ import {
     PubSubService,
     AuthService,
     UserApiService,
+    IntakeService,
+    ModuleService,
+    ScheduleService
 } from './services';
 
 @NgModule({
@@ -103,6 +106,9 @@ import {
         PubSubService,
         AuthService,
         UserApiService,
+        IntakeService,
+        ModuleService,
+        ScheduleService
     ],
     bootstrap: [AppComponent]
 })

@@ -1,3 +1,13 @@
+<div  class="att-select-intake-container">
+    <span>Select Intake: </span>
+    <span>
+        <mat-select class="att-select-intake-mat-select" placeholder="Intake" [(ngModel)]="intake" (ngModelChange)="onIntakeChanged()">
+            <mat-option *ngFor="let intake of intakes" [value]="intake">
+                {{ intake }}
+            </mat-option>
+        </mat-select>
+    </span>
+</div>
 <br/>
 <div class="att-calendar-buttons-container">
     <div>
@@ -68,7 +78,7 @@
     <mwl-calendar-month-view
         *ngSwitchCase="CalendarView.Month"
         [viewDate]="viewDate"
-        [events]="events"
+        [events]="lectures"
         [refresh]="refresh"
         [activeDayIsOpen]="activeDayIsOpen"
         (dayClicked)="dayClicked($event.day)"
@@ -79,7 +89,7 @@
     <mwl-calendar-week-view
         *ngSwitchCase="CalendarView.Week"
         [viewDate]="viewDate"
-        [events]="events"
+        [events]="lectures"
         [refresh]="refresh"
         (eventClicked)="handleEvent('Clicked', $event.event)"
         (eventTimesChanged)="eventTimesChanged($event)"
@@ -88,7 +98,7 @@
     <mwl-calendar-day-view
         *ngSwitchCase="CalendarView.Day"
         [viewDate]="viewDate"
-        [events]="events"
+        [events]="lectures"
         [refresh]="refresh"
         (eventClicked)="handleEvent('Clicked', $event.event)"
         (eventTimesChanged)="eventTimesChanged($event)"
