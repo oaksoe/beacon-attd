@@ -20,6 +20,18 @@ var create = async (req, res) => {
     }
 }
 
+var find = async (req, res) => {
+    var id = req.params.id;
+    
+    try {
+        var result = await dbEntityController.find(entity, { id: id });
+        httpHelper.res(res, result.length > 0 ? result[0] : null);
+    } catch(err) {
+        httpHelper.err(res, err);
+    }
+}
+
 router.post('/create', create);
+router.get('/:id', find);
 
 module.exports = router;

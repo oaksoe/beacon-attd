@@ -3,11 +3,17 @@ export const PubSubEventType = {
     USER_LOGGEDIN: 'USER_LOGGEDIN',
 };
 
-export const UserRoleType = {
+export const UserType = {
     ADMIN: 'ADMIN',
     LECTURER: 'LECTURER',
     STUDENT: 'STUDENT'
 };
+
+export const AttendanceStatus = {
+    PRESENT: 'PRESENT',
+    ABSENT: 'ABSENT',
+    LATE: 'LATE'
+}
 
 export const Intakes = ['UC3F1805SE', 'UC3F1804BIT'];
 

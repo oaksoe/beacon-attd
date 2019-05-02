@@ -5,3 +5,4 @@ export { DataUploadsComponent } from './admin/data-uploads/data-uploads.componen
 export { ScheduleComponent } from './timetable/schedule/schedule.component';
 export { CalendarComponent } from './timetable/calendar/calendar.component';
 export { AttendanceListComponent } from './attendance/attendance-list/attendance-list.component';
+export { AttendanceReportComponent } from './attendance/attendance-report/attendance-report.component';

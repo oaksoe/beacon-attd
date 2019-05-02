@@ -6,6 +6,7 @@ import {
     DataUploadsComponent,
     ScheduleComponent,
     AttendanceListComponent,
+    AttendanceReportComponent
 } from './components';
 
 
@@ -14,7 +15,8 @@ const MAINMENU_ROUTES: Routes = [
     { path: 'login', component: LoginComponent }, 
     { path: 'dataUploads', component: DataUploadsComponent }, 
     { path: 'schedule', component: ScheduleComponent }, 
-    { path: 'attendanceList', component: AttendanceListComponent },
+    { path: 'attendanceList/:id', component: AttendanceListComponent },
+    { path: 'attendanceReport', component: AttendanceReportComponent },
 ]
 
 @NgModule({

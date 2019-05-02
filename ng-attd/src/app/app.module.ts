@@ -42,6 +42,7 @@ import {
     ScheduleComponent,
     CalendarComponent,
     AttendanceListComponent,
+    AttendanceReportComponent,
 } from './components';
 
 import {
@@ -50,6 +51,7 @@ import {
     PubSubService,
     AuthService,
     UserApiService,
+    AttendanceApiService,
     IntakeService,
     ModuleService,
     ScheduleService
@@ -65,6 +67,7 @@ import {
         ScheduleComponent,
         CalendarComponent,
         AttendanceListComponent,
+        AttendanceReportComponent,
     ],
     imports: [
         BrowserModule,
@@ -106,6 +109,7 @@ import {
         PubSubService,
         AuthService,
         UserApiService,
+        AttendanceApiService,
         IntakeService,
         ModuleService,
         ScheduleService

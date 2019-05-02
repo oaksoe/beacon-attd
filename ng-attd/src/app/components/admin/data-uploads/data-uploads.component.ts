@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Student, UserRoleType } from '../../../models';
+import { Student, UserType } from '../../../models';
 import { UserApiService } from '../../../services';
 import { MatTableDataSource } from '@angular/material';
 
@@ -47,7 +47,7 @@ export class DataUploadsComponent implements OnInit {
                         username: studentID,
                         password: studentID,
                         name: studentDetails[1],
-                        role: UserRoleType.STUDENT,
+                        role: UserType.STUDENT,
                         intake: studentDetails[2],
                         modules: modules
                     });

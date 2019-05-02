@@ -2,7 +2,9 @@ import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef } from '@ang
 import { Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { isSameDay, isSameMonth } from 'date-fns';
-import { ScheduleService, IntakeService } from '../../../services';
+import { Router } from '@angular/router';
+import { ScheduleService, IntakeService, AttendanceApiService } from '../../../services';
+import { Attendance } from '../../../models';
 
 @Component({
     selector: 'attd-calendar',
@@ -24,6 +26,8 @@ export class CalendarComponent {
     constructor(
         private scheduleService: ScheduleService,
         private intakeService: IntakeService,
+        private router: Router,
+        private attendanceApiService: AttendanceApiService
     ) {
         this.intakes = this.intakeService.getIntakes();
         this.intake = this.intakes[0];
@@ -64,7 +68,22 @@ export class CalendarComponent {
     }
   
     public handleEvent(action: string, event: CalendarEvent): void {
-        console.log('hello');
+        const attendance: Attendance = {
+            id: '',
+            intake: this.intake,
+            module: event.title,
+            startDate: event.start,
+            endDate: event.end,
+            logs: []
+        }
+
+        this.attendanceApiService.createAttendance(attendance)
+            .subscribe(result => {
+                const attendanceID = result.data.id;
+                this.router.navigate(['/attendanceList', attendanceID]);
+            }, err => { 
+                console.log(err);
+            });
     }
   
     public closeOpenMonthViewDay() {
