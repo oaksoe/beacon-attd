@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import {
     MatButtonModule,
@@ -63,7 +65,7 @@ import { ClasstimetableComponent } from './components/timetable/classtimetable/c
         ScheduleComponent,
         CalendarComponent,
         AttendanceListComponent,
-        ClasstimetableComponent,
+        ClasstimetableComponent
     ],
     imports: [
         BrowserModule,
@@ -94,6 +96,8 @@ import { ClasstimetableComponent } from './components/timetable/classtimetable/c
         MatSortModule,
         MatMenuModule,
         MatExpansionModule,
+        NgbModalModule,
+        FlatpickrModule.forRoot(),
         CalendarModule.forRoot ({
             provide: DateAdapter,
             useFactory: adapterFactory
