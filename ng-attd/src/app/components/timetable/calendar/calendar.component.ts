@@ -77,13 +77,25 @@ export class CalendarComponent {
             logs: []
         }
 
-        this.attendanceApiService.createAttendance(attendance)
-            .subscribe(result => {
-                const attendanceID = result.data.id;
-                this.router.navigate(['/attendanceList', attendanceID]);
-            }, err => { 
-                console.log(err);
-            });
+        this.attendanceApiService.getAttendanceByCriteria(
+            attendance.intake,
+            attendance.module,
+            attendance.startDate,
+            attendance.endDate
+        ).subscribe(result => {
+            if (result.data) {
+                this.router.navigate(['/attendanceList', result.data.id]);
+            } else {
+                this.attendanceApiService.createAttendance(attendance)
+                    .subscribe(result => {
+                        this.router.navigate(['/attendanceList', result.data.id]);
+                    }, err => { 
+                        console.log(err);
+                    });
+            }
+        }, err => { 
+            console.log(err);
+        });
     }
   
     public closeOpenMonthViewDay() {

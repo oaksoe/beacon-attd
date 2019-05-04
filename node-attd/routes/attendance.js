@@ -31,7 +31,28 @@ var find = async (req, res) => {
     }
 }
 
+var findByCriteria = async (req, res) => {
+    var intake = req.params.intake;
+    var intakeModule = req.params.module;
+    var startDate = req.params.startDate;
+    var endDate = req.params.endDate;
+    var criteria = {
+        intake: intake,
+        module: intakeModule,
+        startDate: startDate,
+        endDate: endDate
+    }
+    
+    try {
+        var result = await dbEntityController.find(entity, criteria);
+        httpHelper.res(res, result.length > 0 ? result[0] : null);
+    } catch(err) {
+        httpHelper.err(res, err);
+    }
+}
+
 router.post('/create', create);
 router.get('/:id', find);
+router.get('/criteria/:intake/:module/:startDate/:endDate', findByCriteria);
 
 module.exports = router;

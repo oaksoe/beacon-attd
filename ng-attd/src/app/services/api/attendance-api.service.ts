@@ -22,4 +22,16 @@ export class AttendanceApiService {
                 return result;
             }), catchError(err => Observable.throw(err)));
     }
+    
+    public getAttendanceByCriteria(intakeModule: string, intake: string, startDate: Date, endDate: Date):  Observable<any>  {
+        const criteria = [ encodeURIComponent(intakeModule),
+            encodeURIComponent(intake),
+            startDate.toISOString(),
+            endDate.toISOString()].join('/');
+
+        return this.http.get('/attendance/criteria/' + criteria)
+            .pipe(map((result: any) => {
+                return result;
+            }), catchError(err => Observable.throw(err)));
+    }
 }
