@@ -43,18 +43,35 @@ var find = async (req, res) => {
     
     try {
         var result = await dbEntityController.find(entity, { username: username });
-        http.res(res, result.length > 0 ? result[0] : null);
+        httpHelper.res(res, result.length > 0 ? result[0] : null);
     } catch(err) {
-        http.err(res, err);
+        httpHelper.err(res, err);
     }
 }
 
 var findAll = async (req, res) => {
     try {
         var result = await dbEntityController.find(entity, {});
-        http.res(res, result);
+        httpHelper.res(res, result);
     } catch(err) {
-        http.err(res, err);
+        httpHelper.err(res, err);
+    }
+}
+
+var findStudentsByCriteria = async (req, res) => {
+    var intake = req.params.intake;
+    var intakeModule = req.params.module;
+    var criteria = {
+        role: 'STUDENT',
+        intake: intake,
+        modules: intakeModule
+    }
+
+    try {
+        var result = await dbEntityController.find(entity, criteria);
+        httpHelper.res(res, result);
+    } catch(err) {
+        httpHelper.err(res, err);
     }
 }
 
@@ -62,5 +79,6 @@ router.post('/create', create);
 router.post('/createAll', createAll);
 router.get('/:username', find);
 router.get('/', findAll);
+router.get('/students/:intake/:module', findStudentsByCriteria)
 
 module.exports = router;

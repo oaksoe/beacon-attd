@@ -36,4 +36,15 @@ export class UserApiService {
                 return result;
             }), catchError(err => Observable.throw(err)));
     }
+
+    public getStudentsByCriteria(intake: string, intakeModule: string): Observable<any> {
+        const criteria = [ encodeURIComponent(intake),
+            encodeURIComponent(intakeModule)].join('/');
+
+        return this.http.get('/user/students/' + criteria)
+            .pipe(map((result: any) => {
+                const data = result.data;
+                return result;
+            }), catchError(err => Observable.throw(err)));
+    } 
 }

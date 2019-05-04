@@ -20,6 +20,20 @@ var create = async (req, res) => {
     }
 }
 
+var update = async (req, res) => {
+    try {
+        var attendance = req.body;
+        if (attendance) {            
+            await dbEntityController.update(entity, attendance, { id: attendance.id });
+            httpHelper.res(res, null);
+        } else {
+            httpHelper.err(res, 'Invalid attendance details');
+        }
+    } catch(err) {
+        httpHelper.err(res, err);
+    }
+}
+
 var find = async (req, res) => {
     var id = req.params.id;
     
@@ -52,6 +66,7 @@ var findByCriteria = async (req, res) => {
 }
 
 router.post('/create', create);
+router.put('/', update);
 router.get('/:id', find);
 router.get('/criteria/:intake/:module/:startDate/:endDate', findByCriteria);
 

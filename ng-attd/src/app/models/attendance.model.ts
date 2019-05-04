@@ -8,7 +8,8 @@ export class Attendance {
 }
 
 export class AttendanceLog {
-    public studentID: string;
+    public studentID: string;    
+    public studentName: string;
     public status: string;
     public presencePercent: number;
 }

@@ -16,6 +16,13 @@ export class AttendanceApiService {
             }), catchError(err => Observable.throw(err)));
     }
 
+    public updateAttendance(attendance: Attendance): Observable<any> {
+        return this.http.put('/attendance/', attendance)
+            .pipe(map((result: any) => {
+                return result;
+            }), catchError(err => Observable.throw(err)));
+    }
+
     public getAttendance(id: string):  Observable<any>  {
         return this.http.get('/attendance/' + encodeURIComponent(id))
             .pipe(map((result: any) => {
@@ -23,9 +30,9 @@ export class AttendanceApiService {
             }), catchError(err => Observable.throw(err)));
     }
     
-    public getAttendanceByCriteria(intakeModule: string, intake: string, startDate: Date, endDate: Date):  Observable<any>  {
-        const criteria = [ encodeURIComponent(intakeModule),
-            encodeURIComponent(intake),
+    public getAttendanceByCriteria(intake: string, intakeModule: string, startDate: Date, endDate: Date):  Observable<any>  {
+        const criteria = [ encodeURIComponent(intake),
+            encodeURIComponent(intakeModule),
             startDate.toISOString(),
             endDate.toISOString()].join('/');
 

@@ -10,6 +10,7 @@ export const UserType = {
 };
 
 export const AttendanceStatus = {
+    UNMARKED: 'UNMARKED',
     PRESENT: 'PRESENT',
     ABSENT: 'ABSENT',
     LATE: 'LATE'

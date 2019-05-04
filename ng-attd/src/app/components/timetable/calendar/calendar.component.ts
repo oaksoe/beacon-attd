@@ -3,8 +3,8 @@ import { Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Router } from '@angular/router';
-import { ScheduleService, IntakeService, AttendanceApiService } from '../../../services';
-import { Attendance } from '../../../models';
+import { ScheduleService, IntakeService, AttendanceApiService, UserApiService } from '../../../services';
+import { Attendance, AttendanceStatus } from '../../../models';
 
 @Component({
     selector: 'attd-calendar',
@@ -27,7 +27,8 @@ export class CalendarComponent {
         private scheduleService: ScheduleService,
         private intakeService: IntakeService,
         private router: Router,
-        private attendanceApiService: AttendanceApiService
+        private attendanceApiService: AttendanceApiService,
+        private userApiService: UserApiService,
     ) {
         this.intakes = this.intakeService.getIntakes();
         this.intake = this.intakes[0];
@@ -86,9 +87,27 @@ export class CalendarComponent {
             if (result.data) {
                 this.router.navigate(['/attendanceList', result.data.id]);
             } else {
-                this.attendanceApiService.createAttendance(attendance)
+                this.userApiService.getStudentsByCriteria(attendance.intake, attendance.module)
                     .subscribe(result => {
-                        this.router.navigate(['/attendanceList', result.data.id]);
+                        if (result.data) {
+                            result.data.forEach(student => {
+                                attendance.logs.push({
+                                    studentID: student.id,
+                                    studentName: student.name,
+                                    status: AttendanceStatus.UNMARKED,
+                                    presencePercent: 0
+                                });
+                            });
+                        } else {
+                            console.log('Empty attendance data.');
+                        }      
+                        
+                        this.attendanceApiService.createAttendance(attendance)
+                            .subscribe(result => {
+                                this.router.navigate(['/attendanceList', result.data.id]);
+                            }, err => { 
+                                console.log(err);
+                            });
                     }, err => { 
                         console.log(err);
                     });
