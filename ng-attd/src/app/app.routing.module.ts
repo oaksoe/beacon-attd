@@ -6,6 +6,7 @@ import {
     DataUploadsComponent,
     ScheduleComponent,
     AttendanceListComponent,
+    ClasstimetableComponent
 } from './components';
 
 
@@ -15,6 +16,7 @@ const MAINMENU_ROUTES: Routes = [
     { path: 'dataUploads', component: DataUploadsComponent }, 
     { path: 'schedule', component: ScheduleComponent }, 
     { path: 'attendanceList', component: AttendanceListComponent },
+    { path: 'classTimetable', component: ClasstimetableComponent }
 ]
 
 @NgModule({

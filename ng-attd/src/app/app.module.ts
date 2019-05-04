@@ -51,6 +51,7 @@ import {
     AuthService,
     UserApiService,
 } from './services';
+import { ClasstimetableComponent } from './components/timetable/classtimetable/classtimetable.component';
 
 @NgModule({
     declarations: [
@@ -62,6 +63,7 @@ import {
         ScheduleComponent,
         CalendarComponent,
         AttendanceListComponent,
+        ClasstimetableComponent,
     ],
     imports: [
         BrowserModule,
