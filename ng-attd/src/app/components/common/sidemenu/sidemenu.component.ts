@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef, ViewChild, OnInit, OnDestroy } from '@ang
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { PubSubService } from '../../../services';
+import { PubSubService, AuthService } from '../../../services';
 import { PubSubEventType } from '../../../models';
 
 @Component({
@@ -13,6 +13,9 @@ import { PubSubEventType } from '../../../models';
 export class SidemenuComponent implements OnInit, OnDestroy {
     @ViewChild('sidenav') sidenav;
 
+    public userLoggedIn = false;
+    public currentUserRole = '';
+
     private mobileQuery: MediaQueryList;
     private _mobileQueryListener: () => void;
     private ngUnsubscribe = new Subject<void>();
@@ -21,6 +24,7 @@ export class SidemenuComponent implements OnInit, OnDestroy {
         private media: MediaMatcher,
         private cdr: ChangeDetectorRef,
         private pubSubService: PubSubService,
+        private authService: AuthService,
     ) {
         this.mobileQuery = this.media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => this.cdr.detectChanges();
@@ -33,9 +37,16 @@ export class SidemenuComponent implements OnInit, OnDestroy {
                 takeUntil(this.ngUnsubscribe)
             )
             .subscribe(event => {
-                if (event && event.type === PubSubEventType.TOGGLE_SIDEMENU) {
-                    this.sidenav.toggle();
-                }
+                if (event) {
+                    if (event.type === PubSubEventType.TOGGLE_SIDEMENU) {
+                        if (this.sidenav) {                            
+                            this.sidenav.toggle();
+                        }
+                    } else if (event.type === PubSubEventType.USER_LOGGEDIN) {
+                        this.userLoggedIn = true;
+                        this.currentUserRole = this.authService.getUserRole();
+                    }
+                } 
             });  
     }
 

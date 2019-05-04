@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PubSubService, AuthService } from '../../../services';
-import { PubSubEventType } from 'src/app/models';
+import { PubSubEventType, UserType } from 'src/app/models';
 
 @Component({
     selector: 'itlx-login',
@@ -35,7 +35,14 @@ export class LoginComponent implements OnInit {
                         type: PubSubEventType.USER_LOGGEDIN
                     });
         
-                    this.router.navigate(['/attendanceList']);
+                    const userRole = this.authService.getUserRole();
+                    let redirectRoute = '/schedule';
+
+                    if (userRole === UserType.ADMIN) {
+                        redirectRoute = '/dataUploads';
+                    }
+
+                    this.router.navigate([redirectRoute]);
                 }
             }, err => { 
                 console.log(err);

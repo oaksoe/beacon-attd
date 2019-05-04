@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AttendanceApiService } from '../../../services';
+import { AttendanceApiService, AuthService } from '../../../services';
 import { Attendance, AttendanceLog, AttendanceStatus } from '../../../models';
 import { MatTableDataSource } from '@angular/material';
 
@@ -22,13 +22,17 @@ export class AttendanceListComponent implements OnInit {
 
     public displayedColumns = ['no','id', 'name','status','presencePercent'];
     public dataSource: MatTableDataSource<AttendanceLog>;
+
+    public currentUserRole: string;
     
     constructor(
         private route: ActivatedRoute,
-        private attendanceApiService: AttendanceApiService
+        private attendanceApiService: AttendanceApiService,
+        private authService: AuthService
     ) {
         this.attendance = new Attendance();
         this.dataSource = new MatTableDataSource([]);
+        this.currentUserRole = this.authService.getUserRole();
     }
     
     public ngOnInit() {
@@ -49,7 +53,13 @@ export class AttendanceListComponent implements OnInit {
                     logs: result.data.logs,
                 };
 
-                this.dataSource.data = this.attendance.logs;
+                if (this.currentUserRole === 'STUDENT') {
+                    const studentID = this.authService.getUsername();
+                    this.dataSource.data = this.attendance.logs.filter(log => log.studentID === studentID);
+                } else {
+                    this.dataSource.data = this.attendance.logs;
+                }
+                
                 this.setLectureDateTime();
             }, err => { 
                 console.log(err);

@@ -12,7 +12,7 @@
         </span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span>
-            <button (click)="updateAttendance()">Update</button>
+            <button *ngIf="currentUserRole === 'LECTURER'" (click)="updateAttendance()">Update</button>
         </span>
     </div>
     <div>
@@ -48,7 +48,7 @@
     <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Status</h4></mat-header-cell>
         <mat-cell *matCellDef="let row">
-            <mat-select class="att-attendance-status-select" [(ngModel)]="row.status">
+            <mat-select class="att-attendance-status-select" [(ngModel)]="row.status" [disabled]="currentUserRole !== 'LECTURER'">
                 <mat-option *ngFor="let status of statusList" [value]="status">
                     {{ status }}
                 </mat-option>
@@ -60,7 +60,8 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Presence %</h4></mat-header-cell>
         <mat-cell *matCellDef="let row">
             <span>
-                <input class="att-attendance-percent-input" matInput type="number" [(ngModel)]="row.presencePercent" (change)="presencePercentChanged(row)">
+                <input class="att-attendance-percent-input" matInput type="number" [disabled]="currentUserRole !== 'LECTURER'"
+                [(ngModel)]="row.presencePercent" (change)="presencePercentChanged(row)">
                 %
             </span>
         </mat-cell>

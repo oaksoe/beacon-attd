@@ -10,14 +10,14 @@ Body:
 	"username": "admin",
 	"password": "admin",
 	"name": "admin",
-	"role": "Admin"
+	"role": "ADMIN"
 }
 
 {
 	"username": "lecturer",
 	"password": "lecturer",
 	"name": "Lecturer",
-	"role": "Lecturer"
+	"role": "LECTURER"
 }
 
 url: http://localhost:8000/v1/api/auth/login
