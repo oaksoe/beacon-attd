@@ -6,7 +6,8 @@ import {
     DataUploadsComponent,
     ScheduleComponent,
     AttendanceListComponent,
-    AttendanceReportComponent
+    AttendanceSummaryComponent,
+    AttendanceStatisticsComponent,
 } from './components';
 
 import { AuthGuard } from './guards/auth.guard';
@@ -18,7 +19,8 @@ const MAINMENU_ROUTES: Routes = [
     { path: 'dataUploads', component: DataUploadsComponent, canActivate: [AuthGuard] }, 
     { path: 'schedule', component: ScheduleComponent, canActivate: [AuthGuard] }, 
     { path: 'attendanceList/:id', component: AttendanceListComponent, canActivate: [AuthGuard] },
-    { path: 'attendanceReport', component: AttendanceReportComponent, canActivate: [AuthGuard] },
+    { path: 'attendanceSummary', component: AttendanceSummaryComponent, canActivate: [AuthGuard] },
+    { path: 'attendanceStatistics', component: AttendanceStatisticsComponent, canActivate: [AuthGuard] },
 ]
 
 @NgModule({

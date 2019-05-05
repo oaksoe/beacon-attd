@@ -42,7 +42,8 @@ import {
     ScheduleComponent,
     CalendarComponent,
     AttendanceListComponent,
-    AttendanceReportComponent,
+    AttendanceSummaryComponent,
+    AttendanceStatisticsComponent,
 } from './components';
 
 import {
@@ -69,7 +70,8 @@ import { AuthGuard } from './guards/auth.guard';
         ScheduleComponent,
         CalendarComponent,
         AttendanceListComponent,
-        AttendanceReportComponent,
+        AttendanceSummaryComponent,
+        AttendanceStatisticsComponent,
     ],
     imports: [
         BrowserModule,

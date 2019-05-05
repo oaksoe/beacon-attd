@@ -28,9 +28,13 @@
                     <h1 class="itl-sidenav-container-item-header">
                         <b>Reports</b>
                     </h1>
-                    <a class="itl-sidenav-container-item" mat-list-item routerLinkActive="active" [routerLink]="['/attendanceReport']">
+                    <a class="itl-sidenav-container-item" mat-list-item routerLinkActive="active" [routerLink]="['/attendanceSummary']">
                         <mat-icon>list</mat-icon>
-                        <span class="itl-sidenav-container-item-label">Attendance</span>
+                        <span class="itl-sidenav-container-item-label">Attendance Summary</span>
+                    </a>
+                    <a class="itl-sidenav-container-item" mat-list-item routerLinkActive="active" [routerLink]="['/attendanceStatistics']">
+                        <mat-icon>list</mat-icon>
+                        <span class="itl-sidenav-container-item-label">Attendance Statistics</span>
                     </a>
                 </ng-container>
             </mat-nav-list>
