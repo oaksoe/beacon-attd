@@ -1,0 +1,43 @@
+<div>
+    <h3>Upload Student Details</h3>
+    <input type="file" (change)="onFileSelect($event.target)" name="myfile">
+    <button mat-raised-button color="primary" (click)="onUploadClick()" [disabled]="!hasFileToUpload">Upload</button>
+</div>
+<div>
+    <h3>Student Details</h3>
+    <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="no">
+            <mat-header-cell *matHeaderCellDef mat-sort-header><h4>No</h4></mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header><h4>ID</h4></mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.id}}
+            </mat-cell>
+        </ng-container>
+            
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Name</h4></mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="intake">
+            <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Intake</h4></mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.intake}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="modules">
+            <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Modules</h4></mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.modules.join(', ')}}
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>    
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[8, 25, 50, 100]"></mat-paginator>
+</div>

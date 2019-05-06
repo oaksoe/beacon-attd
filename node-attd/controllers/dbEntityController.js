@@ -1,9 +1,14 @@
 var dbController = require('./dbController');
 var db = require('../modules/db');
+var uuid = require('../helpers/uuid');
 var dbError = 'DB Error. Details: '; 
 
 exports.create = async (entity, data) => {
     try {
+        if (!data.id) {
+            data.id = uuid.create();
+        }
+
         var dbConn = db.collection(entity);
         var result = await dbController.create(dbConn, data);
         return {

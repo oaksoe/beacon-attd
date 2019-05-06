@@ -1,0 +1,107 @@
+<div  class="att-select-intake-container">
+    <span>Select Intake: </span>
+    <span>
+        <mat-select class="att-select-intake-mat-select" placeholder="Intake" [(ngModel)]="intake" (ngModelChange)="onIntakeChanged()">
+            <mat-option *ngFor="let intake of intakes" [value]="intake">
+                {{ intake }}
+            </mat-option>
+        </mat-select>
+    </span>
+</div>
+<br/>
+<div class="att-calendar-buttons-container">
+    <div>
+        <span>
+            <button mat-raised-button
+                mwlCalendarPreviousView
+                [view]="view"
+                [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()"
+            >
+                Previous
+            </button>
+        </span>
+        <span>
+            <button mat-button
+                class="att-calendar-today-button"
+                mwlCalendarToday
+                [(viewDate)]="viewDate"
+            >
+            Today
+            </button>
+        </span>
+        <span>
+            <button mat-raised-button
+                mwlCalendarNextView
+                [view]="view"
+                [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()"
+            >
+            Next
+            </button>
+        </span>
+    </div>
+    <div>
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+    <div>
+        <span>
+            <button mat-raised-button
+                (click)="setView(CalendarView.Month)"
+                [class.active]="view === CalendarView.Month"
+            >
+            Month
+            </button>
+        </span>
+        <span>
+            <button mat-raised-button
+                (click)="setView(CalendarView.Week)"
+                [class.active]="view === CalendarView.Week"
+            >
+            Week
+            </button>
+        </span>
+        <span>
+            <button mat-button
+                class="att-calendar-day-button"
+                (click)="setView(CalendarView.Day)"
+                [class.active]="view === CalendarView.Day"
+            >
+            Day
+            </button>
+        </span>
+    </div>
+</div>
+<br />
+
+<div [ngSwitch]="view">
+    <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        [events]="lectures"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [viewDate]="viewDate"
+        [events]="lectures"
+        [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+        *ngSwitchCase="CalendarView.Day"
+        [viewDate]="viewDate"
+        [events]="lectures"
+        [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-day-view>
+</div>

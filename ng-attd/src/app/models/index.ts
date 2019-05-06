@@ -1,3 +1,3 @@
 export * from './constants';
-
-export { User } from './user.model';
+export { User, Student } from './user.model';
+export { Attendance, AttendanceLog, ModuleAttendanceSummary } from './attendance.model';

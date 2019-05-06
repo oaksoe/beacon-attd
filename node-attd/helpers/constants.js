@@ -1,13 +1,12 @@
 exports.USER_TYPE = {
-    STUDENT: 'Student',
-    LECTURER: 'Lecturer'
+    ADMIN: 'ADMIN',
+    STUDENT: 'STUDENT',
+    LECTURER: 'LECTURER'
 }
 
-
 exports.ATTDENDANCE_STATUS = {
-    OPEN: 'Open',
-    LATE: 'Late',
-    ATTENDED: 'Fully Attended',
-    PARTIAL: 'Partially Attended',
-    MISSED: 'Missed'
+    UNMARKED: 'UNMARKED',
+    PRESENT: 'PRESENT',
+    ABSENT: 'ABSENT',
+    LATE: 'LATE'
 }

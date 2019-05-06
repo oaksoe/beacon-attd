@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { User } from '../../models';
+import { User, UserType, Student } from '../../models';
 import { HttpService } from '../api/http.service';
  
 @Injectable()
@@ -66,13 +66,23 @@ export class AuthService {
                 if (result.status === "SUCCESS") {
                     if (result.data) {
                         this.loggedIn = true;
-                        this.setUser({
+
+                        const user: User = {
                             id: result.data.id,
-                            username: result.data._username,
+                            username: result.data.username,
                             password: '',
-                            name: result.data._name,
-                            role: result.data._type
-                        });
+                            name: result.data.name,
+                            role: result.data.role
+                        };
+
+                        if (user.role === UserType.STUDENT) {
+                            const student:any = user;
+                            student.intake = result.data.intake;
+                            student.modules = result.data.modules;
+                            this.setUser(student as Student);
+                        } else {
+                            this.setUser(user);
+                        }
                         
                         return this.getUser();
                     } 

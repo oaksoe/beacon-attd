@@ -1,0 +1,62 @@
+<div  class="att-select-student-container">
+    <span *ngIf="currentRole === 'LECTURER'">
+        <span>Select Student: </span>
+        <mat-select class="att-select-student-mat-select" [(ngModel)]="student" (ngModelChange)="onStudentChanged()">
+            <mat-option *ngFor="let student of students" [value]="student">
+                {{ student.name }}
+            </mat-option>
+        </mat-select>
+    </span>
+    <span>
+        <span>Intake: </span>
+        <span>{{ student.intake }}</span>
+    </span>
+</div>
+<br/>
+<mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="no">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>No</h4></mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="module">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>module</h4></mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.module}}
+        </mat-cell>
+    </ng-container>
+        
+    <ng-container matColumnDef="attendancePercent">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Percent</h4></mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.attendancePercent}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="presentCount">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Present Count</h4></mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.presentCount}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="unmarkedCount">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Unmarked Count</h4></mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.unmarkedCount}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="absentCount">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Absent Count</h4></mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.absentCount}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lateCount">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Late Count</h4></mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.lateCount}}
+        </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>    
+</mat-table>
+<mat-paginator [pageSizeOptions]="[8, 25, 50, 100]"></mat-paginator>

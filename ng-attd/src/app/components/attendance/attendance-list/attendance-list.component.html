@@ -1,1 +1,75 @@
-This is attendance list!
+<div>
+    <h3>Attendance Details</h3>
+    <div>
+        <span>
+            <span>Intake: </span>
+            <span>{{ attendance.intake }}</span>
+        </span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>
+            <span>Module: </span>
+            <span>{{ attendance.module }}</span>
+        </span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>
+            <button *ngIf="currentUserRole === 'LECTURER'" (click)="updateAttendance()">Update</button>
+        </span>
+    </div>
+    <div>
+        <span>
+            <span>Date: </span>
+            <span>{{ lectureDate }}</span>
+        </span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>
+            <span>Time: </span>
+            <span>{{ lectureTime }}</span>
+        </span>
+    </div>
+</div>
+<mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="no">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>No</h4></mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>ID</h4></mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.studentID}}
+        </mat-cell>
+    </ng-container>
+        
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Name</h4></mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.studentName}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Status</h4></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <mat-select class="att-attendance-status-select" [(ngModel)]="row.status" 
+                (ngModelChange)="onStatusChanged(row)" [disabled]="currentUserRole !== 'LECTURER'">
+                <mat-option *ngFor="let status of statusList" [value]="status">
+                    {{ status }}
+                </mat-option>
+            </mat-select>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="presencePercent">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Presence %</h4></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <span>
+                <input class="att-attendance-percent-input" matInput type="number" [disabled]="currentUserRole !== 'LECTURER'"
+                [(ngModel)]="row.presencePercent" (change)="presencePercentChanged(row)">
+                %
+            </span>
+        </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>    
+</mat-table>
+<mat-paginator [pageSizeOptions]="[8, 25, 50, 100]"></mat-paginator>
