@@ -13,3 +13,12 @@ export class AttendanceLog {
     public status: string;
     public presencePercent: number;
 }
+
+export class ModuleAttendanceSummary {
+    public module: string;
+    public attendancePercent: string;
+    public unmarkedCount: string;
+    public presentCount: string;
+    public absentCount: string;
+    public lateCount: string;
+}

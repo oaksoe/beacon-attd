@@ -48,7 +48,8 @@
     <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef mat-sort-header><h4>Status</h4></mat-header-cell>
         <mat-cell *matCellDef="let row">
-            <mat-select class="att-attendance-status-select" [(ngModel)]="row.status" [disabled]="currentUserRole !== 'LECTURER'">
+            <mat-select class="att-attendance-status-select" [(ngModel)]="row.status" 
+                (ngModelChange)="onStatusChanged(row)" [disabled]="currentUserRole !== 'LECTURER'">
                 <mat-option *ngFor="let status of statusList" [value]="status">
                     {{ status }}
                 </mat-option>

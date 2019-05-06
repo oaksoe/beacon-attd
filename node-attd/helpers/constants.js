@@ -5,6 +5,7 @@ exports.USER_TYPE = {
 }
 
 exports.ATTDENDANCE_STATUS = {
+    UNMARKED: 'UNMARKED',
     PRESENT: 'PRESENT',
     ABSENT: 'ABSENT',
     LATE: 'LATE'

@@ -32,7 +32,13 @@ export class UserApiService {
     public getAllUsers(): Observable<any> {
         return this.http.get('/user/')
             .pipe(map((result: any) => {
-                const data = result.data;
+                return result;
+            }), catchError(err => Observable.throw(err)));
+    }
+
+    public getUsersByRole(role : string):  Observable<any>  {
+        return this.http.get('/user/role/' + encodeURIComponent(role))
+            .pipe(map((result: any) => {
                 return result;
             }), catchError(err => Observable.throw(err)));
     }

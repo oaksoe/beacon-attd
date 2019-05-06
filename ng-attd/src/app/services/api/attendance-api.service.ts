@@ -41,4 +41,15 @@ export class AttendanceApiService {
                 return result;
             }), catchError(err => Observable.throw(err)));
     }
+
+    public getAttendanceSummary(intake: string, intakeModule: string, studentID: string):  Observable<any>  {
+        const criteria = [ encodeURIComponent(intake),
+            encodeURIComponent(intakeModule),
+            encodeURIComponent(studentID)].join('/');
+
+        return this.http.get('/attendance/summary/' + criteria)
+            .pipe(map((result: any) => {
+                return result;
+            }), catchError(err => Observable.throw(err)));
+    }
 }

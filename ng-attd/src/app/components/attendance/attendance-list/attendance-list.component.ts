@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatTableDataSource } from '@angular/material';
 import { AttendanceApiService, AuthService } from '../../../services';
 import { Attendance, AttendanceLog, AttendanceStatus } from '../../../models';
-import { MatTableDataSource } from '@angular/material';
 
 @Component({
     selector: 'attd-attendance-list',
@@ -81,6 +81,25 @@ export class AttendanceListComponent implements OnInit {
             }, err => { 
                 console.log(err);
             });
+    }
+
+    public onStatusChanged(log: AttendanceLog) {
+        switch (log.status) {
+            case AttendanceStatus.UNMARKED:
+                log.presencePercent = 0; 
+                break;
+            case AttendanceStatus.ABSENT:
+                log.presencePercent = 0; 
+                break;
+            case AttendanceStatus.LATE:
+                log.presencePercent = 67; 
+                break;
+            case AttendanceStatus.PRESENT:
+                if (log.presencePercent === 0) {
+                    log.presencePercent = 100; 
+                }
+                break;
+        }
     }
 
     private setLectureDateTime() {

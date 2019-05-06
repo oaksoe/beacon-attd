@@ -58,6 +58,17 @@ var findAll = async (req, res) => {
     }
 }
 
+var findByRole = async (req, res) => {
+    var role = req.params.role;
+
+    try {
+        var result = await dbEntityController.find(entity, { role: role });
+        httpHelper.res(res, result);
+    } catch(err) {
+        httpHelper.err(res, err);
+    }
+}
+
 var findStudentsByCriteria = async (req, res) => {
     var intake = req.params.intake;
     var intakeModule = req.params.module;
@@ -79,6 +90,7 @@ router.post('/create', create);
 router.post('/createAll', createAll);
 router.get('/:username', find);
 router.get('/', findAll);
+router.get('/role/:role', findByRole);
 router.get('/students/:intake/:module', findStudentsByCriteria)
 
 module.exports = router;
