@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import {
     MatButtonModule,
@@ -105,7 +106,8 @@ import { AuthGuard } from './guards/auth.guard';
         CalendarModule.forRoot ({
             provide: DateAdapter,
             useFactory: adapterFactory
-        })
+        }),
+        NgxChartsModule,
     ],
     providers: [
         ConfigService,

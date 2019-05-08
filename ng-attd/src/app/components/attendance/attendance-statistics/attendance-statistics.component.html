@@ -1,1 +1,33 @@
-This is attendance statistics!
+
+<div  class="att-select-student-container">
+    <span *ngIf="currentRole === 'LECTURER'">
+        <span>Select Student: </span>
+        <mat-select class="att-select-student-mat-select" [(ngModel)]="student" (ngModelChange)="onStudentChanged()">
+            <mat-option *ngFor="let student of students" [value]="student">
+                {{ student.name }}
+            </mat-option>
+        </mat-select>
+    </span>
+    <span>
+        <span>Intake: </span>
+        <span>{{ student.intake }}</span>
+    </span>
+</div>
+<br/>
+<div>
+    <ngx-charts-advanced-pie-chart 
+        [label]="modulesSummaryViewLabel" [view]="summaryView" [scheme]="colorScheme" [results]="modulesSummaryViewData" [gradient]="gradient">
+    </ngx-charts-advanced-pie-chart>
+</div>
+<br/>
+<mat-tab-group color="primary" (selectedTabChange)="tabChanged($event)">
+    <mat-tab *ngFor="let moduleSummary of modulesSummary" label="{{ moduleSummary.module }}">
+        <div>
+            <span>Attendance Percent: </span>
+            <span>{{ moduleSummary.attendancePercent }}</span> %
+        </div>
+        <ngx-charts-advanced-pie-chart 
+            [label]="summaryViewLabel" [view]="summaryView" [scheme]="colorScheme" [results]="summaryViewData" [gradient]="gradient">
+        </ngx-charts-advanced-pie-chart>
+    </mat-tab>
+</mat-tab-group>
