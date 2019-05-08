@@ -23,7 +23,6 @@ var create = async (req, res) => {
 
 var updateFromBeacon = async (req, res) => {
     try {
-        console.log('helloooooooo');
         var id = req.body.id;
         var studentID = req.body.studentID;
         

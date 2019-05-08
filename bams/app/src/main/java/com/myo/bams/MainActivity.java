@@ -12,6 +12,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -38,7 +43,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends Activity implements BeaconConsumer {
+public class MainActivity extends Activity implements BeaconConsumer, View.OnClickListener {
     protected static final String TAG = "MonitoringActivity";
     protected static final String TAG1 = "Beacon";
     private BeaconManager beaconManager;
@@ -47,6 +52,7 @@ public class MainActivity extends Activity implements BeaconConsumer {
     private DailyLecture[] dailyLectures;
     private Boolean startAttendance = false;
     private Boolean beaconSignalDetected = false;
+    private Boolean attendanceUpdated = false;
     private int selectedLectureIndex = 0;
 
     @Override
@@ -95,6 +101,18 @@ public class MainActivity extends Activity implements BeaconConsumer {
         }
 
         getDailyLectures(Config.studentID, Config.studentIntake);
+
+        Button btnUpdateAttd = findViewById(R.id.update_attd);
+        btnUpdateAttd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (beaconSignalDetected && startAttendance) {
+                    updateAttendance();
+                    attendanceUpdated = true;
+                    startAttendance = false;
+                }
+            }
+        });
     }
 
     @Override
@@ -136,13 +154,8 @@ public class MainActivity extends Activity implements BeaconConsumer {
                                     beaconSignalDetected = true;
                                 }
 
-                                if (dailyLectures != null && dailyLectures.length > 0) {
+                                if (dailyLectures != null && dailyLectures.length > 0 && !attendanceUpdated) {
                                     startAttendance = true;
-                                }
-
-                                if (beaconSignalDetected && startAttendance) {
-                                    updateAttendance();
-                                    startAttendance = false;
                                 }
                             }
                         }
@@ -176,6 +189,21 @@ public class MainActivity extends Activity implements BeaconConsumer {
     }
 
     @Override
+    public void onClick(View v)
+    {
+        int index = v.getId();
+        index -= 1000;
+
+        TextView tvAttdStatus = (TextView)findViewById(R.id.txtview_attd_status);
+        tvAttdStatus.setText(dailyLectures[index].studentAttendanceStatus);
+
+        TextView tvAttdPercent = (TextView)findViewById(R.id.txtview_attd_percent);
+        tvAttdPercent.setText(dailyLectures[index].studentPresencePercent + "%");
+
+        selectedLectureIndex = index;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         beaconManager.unbind(this);
@@ -197,6 +225,12 @@ public class MainActivity extends Activity implements BeaconConsumer {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        TextView tvAttdStatus = (TextView)findViewById(R.id.txtview_attd_status);
+                        tvAttdStatus.setText("PRESENT");
+
+                        TextView tvAttdPercent = (TextView)findViewById(R.id.txtview_attd_percent);
+                        tvAttdPercent.setText("100%");
+
                         verificationSuccess(response);
                     }
                 },
@@ -240,6 +274,7 @@ public class MainActivity extends Activity implements BeaconConsumer {
                                 dailyLectures[i].studentPresencePercent = lectures.getJSONObject(i).getInt("studentPresencePercent");
                             }
 
+                            showLectureGroups();
                             verificationSuccess(response);
                         } catch (JSONException e) {
                             Log.e(TAG,"e " +e.toString());
@@ -261,6 +296,30 @@ public class MainActivity extends Activity implements BeaconConsumer {
             }
         };
         queue.add(myRequest);
+    }
+
+    private void showLectureGroups() {
+        RadioGroup rgp = (RadioGroup) this.findViewById(R.id.lecture_group);
+
+        for (int i = 0; i < dailyLectures.length; i++) {
+            RadioButton rbn = new RadioButton(this);
+            rbn.setId(i + 1000);
+            rbn.setText(dailyLectures[i].module);
+            rbn.setOnClickListener(this);
+            rgp.addView(rbn);
+        }
+
+        TextView tvStudentID = (TextView)findViewById(R.id.txtview_student_id);
+        tvStudentID.setText(Config.studentID);
+
+        TextView tvIntake = (TextView)findViewById(R.id.txtview_intake_id);
+        tvIntake.setText(Config.studentIntake);
+
+        TextView tvAttdStatus = (TextView)findViewById(R.id.txtview_attd_status);
+        tvAttdStatus.setText(dailyLectures[0].studentAttendanceStatus);
+
+        TextView tvAttdPercent = (TextView)findViewById(R.id.txtview_attd_percent);
+        tvAttdPercent.setText(dailyLectures[0].studentPresencePercent + "%");
     }
 
     private void verificationSuccess(JSONObject response) {
