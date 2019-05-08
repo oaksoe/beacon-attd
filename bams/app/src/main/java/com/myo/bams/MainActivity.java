@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.myo.bams.Models.DailyLecture;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -29,6 +30,7 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,6 +43,11 @@ public class MainActivity extends Activity implements BeaconConsumer {
     protected static final String TAG1 = "Beacon";
     private BeaconManager beaconManager;
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+
+    private DailyLecture[] dailyLectures;
+    private Boolean startAttendance = false;
+    private Boolean beaconSignalDetected = false;
+    private int selectedLectureIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +93,8 @@ public class MainActivity extends Activity implements BeaconConsumer {
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
+
+        getDailyLectures(Config.studentID, Config.studentIntake);
     }
 
     @Override
@@ -123,7 +132,18 @@ public class MainActivity extends Activity implements BeaconConsumer {
                         for (Beacon oneBeacon : beacons) {
                             Log.d(TAG1, "Major *=> " + oneBeacon.getId2() + " Distance *=> " + Double.toString(oneBeacon.getDistance()) );
                             if(oneBeacon.getId2().toString().equalsIgnoreCase(Config.BeaconMajor) && oneBeacon.getDistance() < Config.classRadius){
-                                postStatus(Config.studentID);
+                                if (!beaconSignalDetected) {
+                                    beaconSignalDetected = true;
+                                }
+
+                                if (dailyLectures != null && dailyLectures.length > 0) {
+                                    startAttendance = true;
+                                }
+
+                                if (beaconSignalDetected && startAttendance) {
+                                    updateAttendance();
+                                    startAttendance = false;
+                                }
                             }
                         }
                     }
@@ -161,21 +181,69 @@ public class MainActivity extends Activity implements BeaconConsumer {
         beaconManager.unbind(this);
     }
 
-    private void postStatus(String studentID){
-        Log.d(TAG, "post " + studentID);
+    private void updateAttendance(){
+        DailyLecture lecture = dailyLectures[selectedLectureIndex];
+        Log.d(TAG, "update attendance ");
         RequestQueue queue = Volley.newRequestQueue(this);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("studentID", studentID);
+        params.put("id", lecture.id);
+        params.put("studentID", Config.studentID);
 
         JsonObjectRequest myRequest = new JsonObjectRequest(
                 Request.Method.POST,
-                Config.BASE_PROTOCOL + Config.API_IP + ":" + Config.API_PORT+ "/v1/api/attendance/create",
+                Config.BASE_PROTOCOL + Config.API_IP + ":" + Config.API_PORT+ "/v1/api/attendance/updateFromBeacon",
                 new JSONObject(params),
 
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         verificationSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        verificationFailed(error);
+                    }
+                }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+        };
+        queue.add(myRequest);
+    }
+
+    private void getDailyLectures(String studentID, String intake){
+        Log.d(TAG, "get daily lectures " + studentID);
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest myRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                Config.BASE_PROTOCOL + Config.API_IP + ":" + Config.API_PORT+ "/v1/api/attendance/daily/lectures/" + studentID + "/" + intake,
+                null,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray lectures = response.getJSONArray("data");
+                            dailyLectures = new DailyLecture[lectures.length()];
+                            for (int i = 0; i < lectures.length(); i++) {
+                                dailyLectures[i] = new DailyLecture();
+                                dailyLectures[i].id = lectures.getJSONObject(i).getString("id");
+                                dailyLectures[i].module = lectures.getJSONObject(i).getString("module");
+                                dailyLectures[i].studentAttendanceStatus = lectures.getJSONObject(i).getString("studentAttendanceStatus");
+                                dailyLectures[i].studentPresencePercent = lectures.getJSONObject(i).getInt("studentPresencePercent");
+                            }
+
+                            verificationSuccess(response);
+                        } catch (JSONException e) {
+                            Log.e(TAG,"e " +e.toString());
+                        }
                     }
                 },
                 new Response.ErrorListener() {

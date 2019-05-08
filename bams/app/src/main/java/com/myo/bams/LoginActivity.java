@@ -83,11 +83,12 @@ public class LoginActivity extends AppCompatActivity {
             Log.d(TAG,response.getString("status"));
             String status = response.getString("status");
             if(status.equalsIgnoreCase("success")){
-                Config.userName = response.getJSONObject("data").getString("_name");
+                Config.userName = response.getJSONObject("data").getString("name");
                 Toast.makeText(this, "Successfully login : " + Config.userName,Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-                Config.studentID = response.getJSONObject("data").getString("_studentID");
+                Config.studentID = response.getJSONObject("data").getString("id");
+                Config.studentIntake = response.getJSONObject("data").getString("intake");
             }
             else{
                 password.setText("");

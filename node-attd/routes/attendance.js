@@ -21,6 +21,33 @@ var create = async (req, res) => {
     }
 }
 
+var updateFromBeacon = async (req, res) => {
+    try {
+        console.log('helloooooooo');
+        var id = req.body.id;
+        var studentID = req.body.studentID;
+        
+        var attendance = await dbEntityController.find(entity, { id: id });
+        if (attendance && attendance.length > 0) {
+            attendance = attendance[0];
+            for (var i = 0; i < attendance.logs.length; i++) {
+                if (attendance.logs[i].studentID === studentID) {
+                    attendance.logs[i].status = constants.ATTDENDANCE_STATUS.PRESENT;
+                    attendance.logs[i].presencePercent = 100;
+                    break;
+                }
+            }
+            await dbEntityController.update(entity, attendance, { id: id });
+            console.log('attd updated!');
+            httpHelper.res(res, null);
+        } else {
+            httpHelper.err(res, 'Attendance record does not exist!');
+        }
+    } catch(err) {
+        httpHelper.err(res, err);
+    }
+}
+
 var update = async (req, res) => {
     try {
         var attendance = req.body;
@@ -136,10 +163,55 @@ var findSummary = async (req, res) => {
     }
 }
 
+var findDailyLectures = async (req, res) => {
+    try {
+        var studentID = req.params.studentID;
+        var intake = req.params.intake;
+        var today = new Date();
+        
+        var attendanceList = await dbEntityController.find('attendance', { intake: intake });
+        var todayLectures = [];
+        
+        for (var i = 0; i < attendanceList.length; i++) {
+            var lecture = attendanceList[i];
+            var startDate = new Date(lecture.startDate);
+
+            if (today.getDate() === startDate.getDate()
+                && today.getMonth() === startDate.getMonth()
+                && today.getFullYear() === startDate.getFullYear()) {
+
+                var attendanceStatus = '';
+                var presencePercent = '';
+
+                for (var j = 0; j < lecture.logs.length; j++) {
+                    if (lecture.logs[j].studentID === studentID) {
+                        attendanceStatus = lecture.logs[j].status;
+                        presencePercent = lecture.logs[j].presencePercent;
+                        break;
+                    }
+                }
+
+                todayLectures.push({
+                    id: lecture.id,
+                    module: lecture.module,
+                    studentAttendanceStatus: attendanceStatus,
+                    studentPresencePercent: presencePercent
+                });
+            }
+        }
+
+        httpHelper.res(res, todayLectures);        
+    } catch(err) {
+        httpHelper.err(res, err);
+    }
+}
+
 router.post('/create', create);
+router.post('/updateFromBeacon', updateFromBeacon);
 router.put('/', update);
 router.get('/:id', find);
 router.get('/criteria/:intake/:module/:startDate/:endDate', findByCriteria);
 router.get('/summary/:intake/:module/:studentID', findSummary);
+router.get('/daily/lectures/:studentID/:intake', findDailyLectures);
 
 module.exports = router;
